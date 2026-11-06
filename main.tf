@@ -83,13 +83,14 @@ resource "azurerm_linux_web_app" "app" {
     always_on = var.app_service_sku != "F1"
 
     application_stack {
-      node_version = "22-lts"
+      python_version = "3.12"
     }
   }
 
   app_settings = {
     APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.appi.connection_string
     ENVIRONMENT                           = var.environment
+    SCM_DO_BUILD_DURING_DEPLOYMENT        = "true"
   }
 
   # Only added when the matching database is enabled.
